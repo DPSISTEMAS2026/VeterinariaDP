@@ -1,0 +1,21 @@
+services:
+  - type: web
+    name: veterinaria-dp
+    runtime: docker
+    repo: https://github.com/DPSISTEMAS2026/VeterinariaDP.git
+    branch: main
+    plan: free
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: NEXT_PUBLIC_SUPABASE_URL
+        sync: false
+      - key: NEXT_PUBLIC_SUPABASE_ANON_KEY
+        sync: false
+    healthCheckPath: /
+    buildFilter:
+      paths:
+        - src/**
+        - public/**
+        - package.json
+        - next.config.ts
+        - Dockerfile
