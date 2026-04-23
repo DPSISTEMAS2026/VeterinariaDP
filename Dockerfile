@@ -1,10 +1,10 @@
 FROM node:20-alpine AS base
 
-# --- Dependencies ---
+# --- Dependencies (ALL for build) ---
 FROM base AS deps
 WORKDIR /app
 COPY package.json package-lock.json ./
-RUN npm ci --omit=dev
+RUN npm ci
 
 # --- Builder ---
 FROM base AS builder
@@ -20,7 +20,7 @@ ENV NEXT_PUBLIC_SUPABASE_ANON_KEY=$NEXT_PUBLIC_SUPABASE_ANON_KEY
 
 RUN npm run build
 
-# --- Runner ---
+# --- Runner (minimal) ---
 FROM base AS runner
 WORKDIR /app
 ENV NODE_ENV=production
